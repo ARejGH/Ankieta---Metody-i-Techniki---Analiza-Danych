@@ -13,26 +13,32 @@ import pandas as pd
 import seaborn as sns
 
 from src.analysis import ConfirmatoryResult, DescriptiveRow
+from src.labels import generate_labels, get_label, write_label_map_csv
 from src.loader import LoadResult
 from src.schema import AnalysisPlan
+
+# Module-level label cache (populated per pipeline run)
+_label_map: dict[str, str] = {}
+
+
+def init_labels(config: AnalysisPlan, output_dir: Path) -> dict[str, str]:
+    """Initialize label mapping and write to output directory.
+
+    Returns the label map for use in chart generation.
+    """
+    global _label_map
+    _label_map = generate_labels(config)
+    write_label_map_csv(_label_map, output_dir)
+    return _label_map
 
 
 def get_item_label(item: str, config: AnalysisPlan) -> str:
     """Get display label for an item."""
-    if item in config.item_labels:
-        return config.item_labels[item]
-    # Extract short label from item text
-    if item.startswith(("1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.")):
-        # Numbered items - take first part
-        parts = item.split(".", 1)
-        if len(parts) > 1:
-            return parts[1][:40].strip() + "..."
-    if "[" in item and "]" in item:
-        # Extract bracket content for budget tradeoff items
-        start = item.rfind("[")
-        end = item.rfind("]")
-        return item[start + 1:end]
-    return item[:40] + "..."
+    # Use cached label map if available
+    if _label_map and item in _label_map:
+        return _label_map[item]
+    # Fallback to config-based lookup
+    return get_label(item, config.item_labels)
 
 
 def write_qa_log(
@@ -337,7 +343,7 @@ def generate_chart_a(
             neutral.append(0)
             agree.append(0)
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(11, 6))
 
     y = np.arange(len(labels))
     height = 0.6
@@ -350,15 +356,15 @@ def generate_chart_a(
     ax.barh(y, agree, height, label="Zgadzam się", color="#1a9850")
 
     ax.set_yticks(y)
-    ax.set_yticklabels(labels)
+    ax.set_yticklabels(labels, fontsize=10)
     ax.set_xlabel("% respondentów")
-    ax.set_title("Postawy wobec wydatków na obronność i ich finansowania")
+    ax.set_title("Postawy wobec wydatków na obronność i ich finansowania", fontsize=12)
     ax.legend(loc="lower right")
     ax.axvline(0, color="black", linewidth=0.5)
     ax.set_xlim(-100, 100)
 
     plt.tight_layout()
-    plt.savefig(output_dir / "figures" / "A_mandate_vs_financing.png", dpi=150)
+    plt.savefig(output_dir / "figures" / "A_mandate_vs_financing.png", dpi=150, bbox_inches="tight")
     plt.close()
 
 
@@ -375,7 +381,7 @@ def generate_chart_b(
     items = chart.items
     labels = [get_item_label(item, config) for item in items]
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(11, 5))
 
     y = np.arange(len(labels))
     height = 0.6
@@ -398,14 +404,14 @@ def generate_chart_b(
         left += pcts
 
     ax.set_yticks(y)
-    ax.set_yticklabels(labels)
+    ax.set_yticklabels(labels, fontsize=10)
     ax.set_xlabel("% respondentów")
-    ax.set_title("Akceptowalność ograniczenia wydatków w różnych obszarach")
+    ax.set_title("Akceptowalność ograniczenia wydatków w różnych obszarach", fontsize=12)
     ax.legend(title="Poziom", loc="lower right", ncol=5)
     ax.set_xlim(0, 100)
 
     plt.tight_layout()
-    plt.savefig(output_dir / "figures" / "B_acceptable_cuts.png", dpi=150)
+    plt.savefig(output_dir / "figures" / "B_acceptable_cuts.png", dpi=150, bbox_inches="tight")
     plt.close()
 
 
@@ -422,7 +428,7 @@ def generate_chart_c(
     items = chart.items
     labels = [get_item_label(item, config) for item in items]
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(11, 5))
 
     x = np.arange(len(labels))
     width = 0.15
@@ -444,13 +450,13 @@ def generate_chart_c(
         ax.bar(x + offset, pcts, width, label=level_label, color=color)
 
     ax.set_xticks(x)
-    ax.set_xticklabels(labels, rotation=15, ha="right")
+    ax.set_xticklabels(labels, rotation=20, ha="right", fontsize=10)
     ax.set_ylabel("% respondentów")
-    ax.set_title("Postrzegane przyczyny wzrostu cen")
+    ax.set_title("Postrzegane przyczyny wzrostu cen", fontsize=12)
     ax.legend(title="Stopień", loc="upper right")
 
     plt.tight_layout()
-    plt.savefig(output_dir / "figures" / "C_inflation_drivers.png", dpi=150)
+    plt.savefig(output_dir / "figures" / "C_inflation_drivers.png", dpi=150, bbox_inches="tight")
     plt.close()
 
 
@@ -459,7 +465,7 @@ def generate_correlation_heatmap(
     config: AnalysisPlan,
     output_dir: Path,
 ) -> None:
-    """Generate correlation heatmap."""
+    """Generate correlation heatmap with readable labels."""
     if corr_matrix.empty:
         # Create placeholder
         fig, ax = plt.subplots(figsize=(8, 6))
@@ -469,10 +475,14 @@ def generate_correlation_heatmap(
         plt.close()
         return
 
-    # Shorten labels
-    short_labels = [get_item_label(col, config)[:20] for col in corr_matrix.columns]
+    # Use short labels from label map
+    short_labels = [get_item_label(col, config) for col in corr_matrix.columns]
 
-    fig, ax = plt.subplots(figsize=(14, 12))
+    # Scale figure size based on number of items
+    n_items = len(short_labels)
+    fig_size = max(12, n_items * 0.5)
+    fig, ax = plt.subplots(figsize=(fig_size, fig_size * 0.9))
+
     sns.heatmap(
         corr_matrix,
         annot=False,
@@ -483,12 +493,16 @@ def generate_correlation_heatmap(
         xticklabels=short_labels,
         yticklabels=short_labels,
         ax=ax,
+        square=True,
     )
-    ax.set_title("Macierz korelacji Spearmana")
-    plt.xticks(rotation=45, ha="right")
-    plt.yticks(rotation=0)
+    ax.set_title("Macierz korelacji Spearmana", fontsize=14, pad=20)
+
+    # Rotate x labels for readability
+    plt.xticks(rotation=45, ha="right", fontsize=9)
+    plt.yticks(rotation=0, fontsize=9)
+
     plt.tight_layout()
-    plt.savefig(output_dir / "figures" / "corr_heatmap.png", dpi=150)
+    plt.savefig(output_dir / "figures" / "corr_heatmap.png", dpi=150, bbox_inches="tight")
     plt.close()
 
 
@@ -525,6 +539,7 @@ def write_manifest(
         },
         "timestamp_utc": datetime.now(UTC).isoformat(),
         "persona": persona,
+        "label_map": "label_map.csv",
     }
 
     (output_dir / "manifest.json").write_text(

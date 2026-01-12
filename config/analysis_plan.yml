@@ -32,10 +32,33 @@ items_universe:
   - "27. Gdybym znalazł(a) dane o wydatkach budżetu, potrafił(a)bym ocenić, czy źródło jest rzetelne. "
 
 # --- ITEM LABELS (OPTIONAL, DISPLAY ONLY) ---
+# Short Polish labels for charts (max ~28 chars)
 item_labels:
   "1. Obecna sytuacja bezpieczeństwa w regionie zwiększa ryzyko zagrożenia militarnego dla Polski.": "Ryzyko militarne"
   "2. W najbliższych latach Polska powinna zwiększyć wydatki na obronność.": "Zwiększyć wydatki"
   "3. Nawet kosztem innych wydatków publicznych obronność powinna być jednym z priorytetów budżetu państwa.": "Obronność priorytetem"
+  "Załóżmy, że państwo chce zwiększyć wydatki na obronność, ale bez podnoszenia łącznych wydatków budżetu.\nOznacza to, że większe wydatki na obronność musiałyby zostać sfinansowane przez mniejsze wydatki w innych obszarach.\nNa ile akceptowalne jest dla Ciebie zmniejszenie wydatków w poniższych obszarach? [Kultura (w tym sport)]": "Cięcia: Kultura/sport"
+  "Załóżmy, że państwo chce zwiększyć wydatki na obronność, ale bez podnoszenia łącznych wydatków budżetu.\nOznacza to, że większe wydatki na obronność musiałyby zostać sfinansowane przez mniejsze wydatki w innych obszarach.\nNa ile akceptowalne jest dla Ciebie zmniejszenie wydatków w poniższych obszarach? [Administracja publiczna]": "Cięcia: Administracja"
+  "Załóżmy, że państwo chce zwiększyć wydatki na obronność, ale bez podnoszenia łącznych wydatków budżetu.\nOznacza to, że większe wydatki na obronność musiałyby zostać sfinansowane przez mniejsze wydatki w innych obszarach.\nNa ile akceptowalne jest dla Ciebie zmniejszenie wydatków w poniższych obszarach? [Inwestycje publiczne]": "Cięcia: Inwestycje"
+  "Załóżmy, że państwo chce zwiększyć wydatki na obronność, ale bez podnoszenia łącznych wydatków budżetu.\nOznacza to, że większe wydatki na obronność musiałyby zostać sfinansowane przez mniejsze wydatki w innych obszarach.\nNa ile akceptowalne jest dla Ciebie zmniejszenie wydatków w poniższych obszarach? [Transfery społeczne]": "Cięcia: Transfery społeczne"
+  "8. Przy decyzjach budżetowych ważne jest znalezienie kompromisu między bezpieczeństwem a innymi potrzebami społecznymi.": "Kompromis budżetowy"
+  "9. Podwyższenie podatków (czyli płacilibyśmy więcej podatków niż obecnie) w celu sfinansowania większych wydatków na obronność jest dla mnie akceptowalne.": "Wyższe podatki"
+  "10. Zaciągnięcie dodatkowego długu publicznego (pożyczenie pieniędzy przez państwo) w celu sfinansowania większych wydatków na obronność jest dla mnie akceptowalne.": "Dodatkowy dług"
+  "12. Państwo powinno ograniczać wydatki, aby unikać zadłużania się.": "Unikać zadłużenia"
+  "14. Wzrost cen w ostatnich latach był dla mnie dużym obciążeniem finansowym.": "Obciążenie inflacyjne"
+  "15. W jakim stopniu wzrost cen wynika z czynników zewnętrznych (np. ceny energii, sytuacja międzynarodowa)?": "Czynniki zewnętrzne"
+  "16. W jakim stopniu wzrost cen wynika z polityki cenowej firm (np. podwyżki cen, marże)? ": "Polityka cenowa firm"
+  "17. W jakim stopniu wypłacanie świadczeń i dodatków przyczynia się do wzrostu cen? ": "Świadczenia a inflacja"
+  "18. Ograniczanie wydatków publicznych może pomóc w spowolnieniu inflacji.": "Cięcia vs inflacja"
+  "19. Poparł(a)bym ograniczenie części transferów socjalnych, jeśli miałoby to spowolnić wzrost cen.": "Ograniczyć transfery"
+  "20. Gdy łączna korzyść finansowa jest podobna, wolę jednorazowy przelew od państwa niż stopniowe korzyści wynikające z niższych podatków.": "Przelew vs niższe podatki"
+  "21. Jednorazowe bony/przelewy są dla mnie bardziej zrozumiałe niż ogólne obniżki podatków.": "Bony bardziej zrozumiałe"
+  "22. Wolę wsparcie, które odczuwam od razu, niż takie, którego efekty pojawiają się stopniowo w dłuższym czasie.": "Natychmiastowe wsparcie"
+  "23. Instytucje publiczne nie są wystarczająco przejrzyste w informowaniu o tym, na co wydawane są pieniądze z budżetu państwa.": "Brak przejrzystości"
+  "24. Informacje o wydatkach publicznych są łatwo dostępne publicznie w internecie.": "Dostępność informacji"
+  "25. Gdybym chciał(a) sprawdzić, na co idą pieniądze z budżetu państwa, potrafił(a)bym znaleźć wiarygodne, oficjalne źródła.": "Umiejętność wyszukiwania"
+  "26. Uważam, że mam podstawową wiedzę o tym, jak działa budżet państwa.": "Wiedza o budżecie"
+  "27. Gdybym znalazł(a) dane o wydatkach budżetu, potrafił(a)bym ocenić, czy źródło jest rzetelne. ": "Ocena rzetelności źródeł"
 
 # --- QA FILTERS (REQUIRED, EXPLICIT) ---
 qa_filters:

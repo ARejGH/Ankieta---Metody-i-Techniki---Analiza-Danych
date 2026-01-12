@@ -5,11 +5,55 @@ from pathlib import Path
 
 import pytest
 
+from src.labels import LABEL_HARD_MAX, generate_labels, validate_labels
+from src.schema import load_config
+
 
 @pytest.fixture(scope="module")
 def outputs_dir():
     """Path to outputs directory."""
     return Path("outputs")
+
+
+# --- Label Tests ---
+
+
+def test_labels_generated_for_all_items():
+    """Ensure labels are generated for every items_universe column."""
+    config = load_config()
+    labels = generate_labels(config)
+
+    for item in config.items_universe:
+        assert item in labels, f"Missing label for: {item[:50]}..."
+
+
+def test_all_labels_unique():
+    """Ensure all short labels are unique."""
+    config = load_config()
+    labels = generate_labels(config)
+
+    short_labels = list(labels.values())
+    assert len(short_labels) == len(set(short_labels)), "Duplicate labels found"
+
+
+def test_labels_within_length_limit():
+    """Ensure no short label exceeds hard limit."""
+    config = load_config()
+    labels = generate_labels(config)
+
+    for orig, short in labels.items():
+        assert len(short) <= LABEL_HARD_MAX, (
+            f"Label too long ({len(short)} chars): {short}"
+        )
+
+
+def test_validate_labels_returns_no_errors():
+    """Ensure validate_labels passes for generated labels."""
+    config = load_config()
+    labels = generate_labels(config)
+    errors = validate_labels(labels)
+
+    assert errors == [], f"Label validation errors: {errors}"
 
 
 def test_all_mandatory_outputs_exist(outputs_dir):

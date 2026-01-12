@@ -25,6 +25,7 @@ from src.outputs import (
     generate_chart_b,
     generate_chart_c,
     generate_correlation_heatmap,
+    init_labels,
     write_aggregates,
     write_manifest,
     write_methods_appendix,
@@ -64,6 +65,10 @@ def run_pipeline(
     print(f"Loading config from {config_path}...")
     config = load_config(config_path)
     print(f"✓ Config valid: {len(config.items_universe)} items in universe")
+
+    print("Initializing label mapping...")
+    labels = init_labels(config, output_dir)
+    print(f"✓ Generated labels for {len(labels)} items, wrote label_map.csv")
 
     print(f"Loading data from {csv_path}...")
     load_result = load_and_filter(config, csv_path)
