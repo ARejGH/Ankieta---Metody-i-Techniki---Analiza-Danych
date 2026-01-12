@@ -70,6 +70,7 @@ def test_report_has_conf_expl_sections(outputs_dir):
 def test_descriptives_row_count_matches_items_universe(outputs_dir):
     """Test that descriptives_table.csv has correct row count."""
     import pandas as pd
+
     from src.schema import load_config
 
     config = load_config()

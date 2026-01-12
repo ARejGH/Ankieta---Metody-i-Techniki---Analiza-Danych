@@ -1,11 +1,10 @@
 """Tests for schema validation."""
 
+
 import pytest
-import yaml
-from pathlib import Path
 from pydantic import ValidationError
 
-from src.schema import load_config, AnalysisPlan
+from src.schema import AnalysisPlan, load_config
 
 
 def test_config_loads_successfully():

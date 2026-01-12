@@ -1,10 +1,7 @@
 """Tests for persona invariance."""
 
-import json
 import tempfile
 from pathlib import Path
-
-import pytest
 
 
 def test_aggregates_byte_identical_across_personas():

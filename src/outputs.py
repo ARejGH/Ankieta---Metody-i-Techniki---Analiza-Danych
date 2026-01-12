@@ -3,7 +3,7 @@
 import hashlib
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 
@@ -113,7 +113,9 @@ def write_report(
             p_str = f"{r.p:.4f}" if r.p else "—"
             padj_str = f"{r.p_adj:.4f}" if r.p_adj else "—"
             eff_str = f"{r.effect_size:.3f}" if r.effect_size else "—"
-            content += f"| {r.test_id} | {r.dv[:30]} | {stat_str} | {p_str} | {padj_str} | {eff_str} | {r.n} |\n"
+            dv_short = r.dv[:30]
+            cols = [r.test_id, dv_short, stat_str, p_str, padj_str, eff_str, str(r.n)]
+            content += "| " + " | ".join(cols) + " |\n"
     else:
         content += "*Brak zdefiniowanych testów konfirmacyjnych.*\n"
 
@@ -136,7 +138,9 @@ Poniżej przedstawiono statystyki opisowe dla wszystkich pozycji ankiety.
         content += f"| {label} | {d.n} | {d.median:.1f} | {mode_str} | {agree_pct:.1f}% |\n"
 
     if len(descriptives) > 10:
-        content += f"\n*... i {len(descriptives) - 10} pozostałych pozycji (pełne dane w descriptives_table.csv)*\n"
+        remaining = len(descriptives) - 10
+        note = f"... i {remaining} pozostałych pozycji (pełne dane w descriptives_table.csv)"
+        content += f"\n*{note}*\n"
 
     content += """
 ### Korelacje
@@ -268,7 +272,8 @@ def write_slide_snippets(
 1. Najwyższe poparcie: "{a_top}" ({a_pct:.0f}% zgadza się)
 2. Widoczne zróżnicowanie postaw wobec metod finansowania
 
-**Ograniczenie**: Dane pochodzą z jednorazowego badania; mogą nie odzwierciedlać stabilnych preferencji.
+**Ograniczenie**: Dane pochodzą z jednorazowego badania;
+mogą nie odzwierciedlać stabilnych preferencji.
 
 ---
 
@@ -503,10 +508,10 @@ def write_manifest(
     output_dir: Path,
 ) -> None:
     """Write manifest.json with reproducibility metadata."""
-    import pandas
-    import scipy
     import matplotlib
     import numpy
+    import pandas
+    import scipy
 
     manifest = {
         "input_hash": compute_file_hash(csv_path),
@@ -518,7 +523,7 @@ def write_manifest(
             "matplotlib": matplotlib.__version__,
             "numpy": numpy.__version__,
         },
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "timestamp_utc": datetime.now(UTC).isoformat(),
         "persona": persona,
     }
 
