@@ -41,7 +41,7 @@ item_labels:
 qa_filters:
   age_column: "Czy masz ukończone 18 lat?"
   age_keep_value: "Tak"
-  attention_check_column: "13. To pytanie ma charakter techniczny i służy sprawdzeniu uważnego wypełniania ankiety. Aby kontynuować, zaznacz odpowiedź „Raczej się zgadzam"."
+  attention_check_column: '13. To pytanie ma charakter techniczny i służy sprawdzeniu uważnego wypełniania ankiety. Aby kontynuować, zaznacz odpowiedź „Raczej się zgadzam".'
   attention_check_expected: "Raczej się zgadzam"
 
 # --- INDICES (may be empty) ---
