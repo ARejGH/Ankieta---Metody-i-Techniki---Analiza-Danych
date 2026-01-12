@@ -178,12 +178,11 @@ confirmatory_tests: []
 # --- GATING THRESHOLDS ---
 gating_thresholds:
   min_group_n: 10               # skip group test if any group < this
-  max_item_missingness: 0.20    # flag items (do NOT drop)
 
 # --- MISSINGNESS RULES ---
 missingness_rules:
-  flag_threshold: 0.20          # flag in qa_log if exceeded
-  index_na_rule: min_valid_items  # index = NA if respondent has fewer
+  flag_threshold: 0.20          # flag in qa_log if item missingness exceeds this (do NOT drop)
+  index_na_rule: min_valid_items  # index = NA if respondent has fewer valid items
 
 # --- FDR SETTINGS ---
 fdr_settings:
@@ -224,7 +223,7 @@ persona_texts:
 | `correlations.scope` | Must be: `all_items`, `indices_only`, or `indices_and_items` |
 | `correlations.items_explicit` | Required and non-empty if scope = `indices_and_items` |
 | `confirmatory_tests` | May be empty |
-| `gating_thresholds` | Both keys required with positive values |
+| `gating_thresholds` | `min_group_n` required with positive value |
 | `missingness_rules` | `flag_threshold` in [0,1]; `index_na_rule` = `min_valid_items` |
 | `fdr_settings.method` | Must be: `bh`, `bonferroni`, or `holm` |
 | `charts` | Non-empty; IDs must match `A_*`, `B_*`, `C_*`; items must be in `items_universe` |
