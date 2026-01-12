@@ -18,8 +18,8 @@ items_universe:
   - "12. Państwo powinno ograniczać wydatki, aby unikać zadłużania się."
   - "14. Wzrost cen w ostatnich latach był dla mnie dużym obciążeniem finansowym."
   - "15. W jakim stopniu wzrost cen wynika z czynników zewnętrznych (np. ceny energii, sytuacja międzynarodowa)?"
-  - "16. W jakim stopniu wzrost cen wynika z polityki cenowej firm (np. podwyżki cen, marże)?"
-  - "17. W jakim stopniu wypłacanie świadczeń i dodatków przyczynia się do wzrostu cen?"
+  - "16. W jakim stopniu wzrost cen wynika z polityki cenowej firm (np. podwyżki cen, marże)? "
+  - "17. W jakim stopniu wypłacanie świadczeń i dodatków przyczynia się do wzrostu cen? "
   - "18. Ograniczanie wydatków publicznych może pomóc w spowolnieniu inflacji."
   - "19. Poparł(a)bym ograniczenie części transferów socjalnych, jeśli miałoby to spowolnić wzrost cen."
   - "20. Gdy łączna korzyść finansowa jest podobna, wolę jednorazowy przelew od państwa niż stopniowe korzyści wynikające z niższych podatków."
@@ -29,7 +29,7 @@ items_universe:
   - "24. Informacje o wydatkach publicznych są łatwo dostępne publicznie w internecie."
   - "25. Gdybym chciał(a) sprawdzić, na co idą pieniądze z budżetu państwa, potrafił(a)bym znaleźć wiarygodne, oficjalne źródła."
   - "26. Uważam, że mam podstawową wiedzę o tym, jak działa budżet państwa."
-  - "27. Gdybym znalazł(a) dane o wydatkach budżetu, potrafił(a)bym ocenić, czy źródło jest rzetelne."
+  - "27. Gdybym znalazł(a) dane o wydatkach budżetu, potrafił(a)bym ocenić, czy źródło jest rzetelne. "
 
 # --- ITEM LABELS (OPTIONAL, DISPLAY ONLY) ---
 item_labels:
@@ -41,7 +41,7 @@ item_labels:
 qa_filters:
   age_column: "Czy masz ukończone 18 lat?"
   age_keep_value: "Tak"
-  attention_check_column: '13. To pytanie ma charakter techniczny i służy sprawdzeniu uważnego wypełniania ankiety. Aby kontynuować, zaznacz odpowiedź „Raczej się zgadzam".'
+  attention_check_column: '13. To pytanie ma charakter techniczny i służy sprawdzeniu uważnego wypełniania ankiety. Aby kontynuować, zaznacz odpowiedź „Raczej się zgadzam”.'
   attention_check_expected: "Raczej się zgadzam"
 
 # --- INDICES (may be empty) ---
@@ -91,8 +91,8 @@ charts:
     type: grouped_bar
     items:
       - "15. W jakim stopniu wzrost cen wynika z czynników zewnętrznych (np. ceny energii, sytuacja międzynarodowa)?"
-      - "16. W jakim stopniu wzrost cen wynika z polityki cenowej firm (np. podwyżki cen, marże)?"
-      - "17. W jakim stopniu wypłacanie świadczeń i dodatków przyczynia się do wzrostu cen?"
+      - "16. W jakim stopniu wzrost cen wynika z polityki cenowej firm (np. podwyżki cen, marże)? "
+      - "17. W jakim stopniu wypłacanie świadczeń i dodatków przyczynia się do wzrostu cen? "
 
 # --- PERSONA TEXTS ---
 persona_texts:
